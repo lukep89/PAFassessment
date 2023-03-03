@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import ibf2022.PAFassessment.Utils;
-import ibf2022.PAFassessment.Utils.*;
 import ibf2022.PAFassessment.model.Transfer;
 
 @Service
@@ -25,7 +23,7 @@ public class LogAuditService {
 
         System.out.println("======== @4 LogAudi transfer: " + transfer.toString() + "\n\n");
 
-        redisTemplate.opsForValue(transfer.getTransactionId(), transfer.toJson().toString());
+        return redisTemplate.opsForValue(transfer.getTransactionId(), transfer.toJson().toString());
 
     }
 
