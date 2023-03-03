@@ -16,7 +16,7 @@
     >
       <br />
       From account:
-      <select name="fromAccount">
+      <select name="fromAccount" data-th-field="*{fromAccount}">
         <option
           data-th-each="acc: ${accounts}"
           data-th-value="${acc.accountId}"
@@ -28,7 +28,7 @@
 
       <br />
       To account:
-      <select name="toAccount">
+      <select name="toAccount" data-th-field="*{toAccount}">
         <option
           data-th-each="acc: ${accounts}"
           data-th-value="${acc.accountId}"
@@ -40,7 +40,7 @@
 
       <br />
       Amount:
-      <input type="number" name="amount" min="10" data-th-field="*{amount}" />
+      <input type="number" name="amount" data-th-field="*{amount}" />
       <br />
       <br />
       Comments:
@@ -56,21 +56,38 @@
       <br />
       <br />
 
-      <!-- <br>
-      <div data-th-if="${#fields.hasErrors('fromAccount')}">
-              <span data-th-text="*{fromAccount}" data-th-errorclass="error"></span>
-            </div>
-            <br>
-            <br>
-      <div data-th-if="${#fields.hasErrors('toAccount')}">
-              <span data-th-text="*{toAccount}" data-th-errorclass="error"></span>
-            </div>
-            <br>
-            <br>
-      <div data-th-if="${#fields.hasErrors('number')}">
-              <span data-th-text="*{number}" data-th-errorclass="error"></span>
-            </div>
-            <br> -->
+      <div>
+        <!-- <div data-th-if="${#fields.hasErrors('fromAccount')}">
+          <span
+            data-th-text="${transfer.fromAccount}"
+            data-th-errorclass="error"
+          ></span>
+        </div>
+        <br />
+        <br />
+        <div data-th-if="${#fields.hasErrors('toAccount')}">
+          <span
+            data-th-text="${transfer.toAccount}"
+            data-th-errorclass="error"
+          ></span>
+        </div>
+        <br />
+        <br />
+        <div data-th-if="${#fields.hasErrors('amount')}">
+          <span
+            data-th-text="${transfer.amount}"
+            data-th-errorclass="error"
+          ></span>
+        </div> -->
+        <br />
+
+        <!-- <div data-th-if="${cErrors gt 0}"> -->
+        <div data-th-each="e : ${cErrors}">
+          <span data-th-text="${e}"></span>
+        </div>
+        <!-- </div> -->
+        <br />
+      </div>
     </form>
   </body>
 </html>
