@@ -23,7 +23,7 @@ public class LogAuditService {
 
         System.out.println("======== @4 LogAudi transfer: " + transfer.toString() + "\n\n");
 
-        return redisTemplate.opsForValue(transfer.getTransactionId(), transfer.toJson().toString());
+        redisTemplate.opsForValue().set(transfer.getTransactionId(), transfer.toJson().toString());
 
     }
 
