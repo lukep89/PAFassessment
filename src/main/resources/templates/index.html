@@ -57,9 +57,9 @@
       <br />
 
       <div>
-        <!-- <div data-th-if="${#fields.hasErrors('fromAccount')}">
+        <div data-th-if="${#fields.hasErrors('fromAccount')}">
           <span
-            data-th-text="${transfer.fromAccount}"
+            data-th-errors="${transfer.fromAccount}"
             data-th-errorclass="error"
           ></span>
         </div>
@@ -67,7 +67,7 @@
         <br />
         <div data-th-if="${#fields.hasErrors('toAccount')}">
           <span
-            data-th-text="${transfer.toAccount}"
+            data-th-errors="${transfer.toAccount}"
             data-th-errorclass="error"
           ></span>
         </div>
@@ -75,10 +75,10 @@
         <br />
         <div data-th-if="${#fields.hasErrors('amount')}">
           <span
-            data-th-text="${transfer.amount}"
+            data-th-errors="${transfer.amount}"
             data-th-errorclass="error"
           ></span>
-        </div> -->
+        </div>
         <br />
 
         <!-- <div data-th-if="${cErrors gt 0}"> -->

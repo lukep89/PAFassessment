@@ -8,6 +8,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,15 @@ import lombok.ToString;
 @ToString
 public class Transfer {
 
-    @NotNull(message = "You forgot to select a account to transfer from")
+    @NotNull(message = "You forgot to select a account to transfer from.")
     private String fromAccount;
 
-    @NotNull(message = "You forgot to select a account to transfer to")
+    @NotNull(message = "You forgot to select a account to transfer to.")
     private String toAccount;
 
-    @Min(value = 10, message = "Minimum transfer is $10")
+    @NotNull(message = "You forgot to select a amount to transfer.")
+    @Min(value = 10, message = "Minimum transfer amount is $10.")
+    @Positive(message = "The transfer amount has to be positive value.")
     private Float amount = 0f;
 
     private String comments;

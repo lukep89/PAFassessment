@@ -1,8 +1,5 @@
 package ibf2022.PAFassessment.service;
 
-import java.time.LocalDate;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -16,10 +13,6 @@ public class LogAuditService {
     private RedisTemplate<String, String> redisTemplate;
 
     public void saveToRedis(Transfer transfer) {
-
-        String transacId = UUID.randomUUID().toString().substring(0, 10);
-        transfer.setTransactionId(transacId);
-        transfer.setDate(LocalDate.now());
 
         System.out.println("======== @4 LogAudi transfer: " + transfer.toString() + "\n\n");
 

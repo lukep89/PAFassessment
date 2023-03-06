@@ -1,12 +1,16 @@
 package ibf2022.PAFassessment.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import ibf2022.PAFassessment.exception.OrderException;
 import ibf2022.PAFassessment.model.Account;
 import ibf2022.PAFassessment.model.Transfer;
 import ibf2022.PAFassessment.repo.AccountsRepository;
@@ -46,39 +50,30 @@ public class FundsTransferService {
         List<String> cErrors = new ArrayList<>();
 
         if (accountRepo.getAccountById(fromAccountId).get() == null) {
-            // model.addAttribute("C0a", "C0 - 'From account' do not exist.");
             cErrors.add("C0 - 'From account' do not exist.");
         }
 
         if (accountRepo.getAccountById(toAccountId).get() == null) {
-            // model.addAttribute("COb", "C0 - 'To account' do not exist.");
             cErrors.add("C0 - 'To account' do not exist.");
         }
 
         if (fromAccountId.length() != 10) {
-            // model.addAttribute("C1a", "C1 - 'From account' invalid account id length.");
             cErrors.add("C1 - 'From account' invalid account id length.");
         }
 
         if (toAccountId.length() != 10) {
-            // model.addAttribute("C1b", "C1 - 'To account' invalid account id length.");
             cErrors.add("C1 - 'To account' invalid account id length.");
         }
 
         if (fromAccountId.equals(toAccountId)) {
-            // model.addAttribute("C2", "C2 - The accounts should not be the same.");
-            cErrors.add("C2 - The accounts should not be the same.");
+            cErrors.add("C2 - The from & to account should not be the same.");
         }
 
         if (amount <= 0) {
-            // model.addAttribute("C3", "C3 - The transfer amount should be more than 0
-            // dollars.");
             cErrors.add("C3 - The transfer amount should be more than 0 dollars.");
         }
 
         if (amount < 10) {
-            // model.addAttribute("C4", "C4 - The transfer amount should at least 10
-            // dollars.");
             cErrors.add("C4 - The transfer amount should at least 10 dollars.");
         }
 
@@ -88,6 +83,31 @@ public class FundsTransferService {
 
         return cErrors;
 
+    }
+
+    @Transactional(rollbackFor = OrderException.class)
+    public void updateAccount(Transfer transfer) throws OrderException {
+
+        String transacId = UUID.randomUUID().toString().substring(0, 10);
+        transfer.setTransactionId(transacId);
+        transfer.setDate(LocalDate.now());
+
+        // System.out.println("======== @5 Service transfer: " + transfer.toString() +
+        // "\n\n");
+
+        Account fromAcc = getAccountById(transfer.getFromAccount()).get();
+        Account toAcc = getAccountById(transfer.getToAccount()).get();
+
+        Float fromDeltaBalance = fromAcc.getBalance() - transfer.getAmount();
+        Float toDeltaBalance = transfer.getAmount() + toAcc.getBalance();
+
+        Boolean fromResult = accountRepo.updateBalanceById(fromDeltaBalance, transfer.getFromAccount());
+        Boolean toResult = accountRepo.updateBalanceById(toDeltaBalance, transfer.getToAccount());
+        // Boolean toResult = false; //for testing OrderException
+
+        if (fromResult != toResult) {
+            throw new OrderException("Error on the update of account balance!");
+        }
     }
 
 }
