@@ -7,11 +7,9 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Successful Transfer</h1>
+    <!-- <h1>Successful Transfer</h1> -->
 
-    <!-- <h3 data-th-text="${msg}"></h3> -->
-
-    <p>
+    <h2>
       Your transfer of <span data-th-text="${transfer.amount}"></span> from
       <br />
       <span data-th-text="|${fromName} (${transfer.fromAccount}) |"></span> to
@@ -22,6 +20,7 @@
       <br />
       <br />
       Transaction id is <span data-th-text="${transfer.transactionId}"></span>
-    </p>
+    </h2>
+    <!-- <p><a href="/index.html"> start a new transfer?</a></p> -->
   </body>
 </html>

@@ -25,6 +25,8 @@ select * from accounts;
 select * from accounts
 where account_id = "if9l185l18";
 
-
+update accounts
+set balance = 470
+where account_id = "ckTV56axff";
 
 
